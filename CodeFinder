@@ -1,0 +1,35 @@
+Sub Search()
+    
+Dim ItemCode As String
+Dim Match As Integer
+Dim Cell As Range
+    
+ItemCode = InputBox("検索する商品コードを入力")
+If ItemCode = ≪≫ Then Exit Sub
+Match = 0
+    
+For Each Cell In Sheets("Sheet1").Range("$A$1:$A$200")
+    
+	If Cell = ItemCode Then
+        	Cell.Select
+
+        	If Cell.Interior.ColorIndex = 27 Then
+			MsgBox ItemCode & ": 以前にマッチした"
+		Else
+			Cell.Interior.ColorIndex = 27
+		End If
+
+        	Match = Match + 1
+	End If
+    
+Next Cell
+    
+If Match = 0 Then
+	MsgBox ItemCode & ": コードが見つかりません"
+ElseIf Match > 1 Then
+	MsgBox ItemCode & ": コードが" & Format(Match, "#,##0") & "回見つかりました"
+End If
+    
+Call Search
+    
+End Sub
