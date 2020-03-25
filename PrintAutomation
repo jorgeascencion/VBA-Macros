@@ -1,0 +1,28 @@
+Dim count As Boolean
+    
+Private Sub Worksheet_Change(ByVal Target As Range)
+
+If Target.Address = "$B$2" And Not Range("B2").Value = "" Then
+	If count = False Then
+		'Select top as print area
+		'上部を印刷領域として選択
+		ActiveSheet.PageSetup.PrintArea = "$A$11:$X$235"
+		count = True
+	Else
+		'Select bottom as print area
+		'下部を印刷領域として選択
+		ActiveSheet.PageSetup.PrintArea = "$A$236:$X$460"
+		count = False
+	End If
+    
+	'Print
+	'印刷する
+	ActiveWindow.SelectedSheets.PrintOut Copies:=1, Collate:=True
+    
+	'Delete input cell
+	'入力セルを削除
+	Range("B2").Value = ""
+	Range("B2").Select
+End If
+
+End Sub
